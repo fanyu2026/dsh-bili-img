@@ -1,0 +1,4 @@
+# dsh-bili-img —— DSH bundle patch
+- insert:
+    - id: dsh-bili-img
+      name: dsh-bili-img
