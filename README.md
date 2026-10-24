@@ -17,6 +17,17 @@ dsh plugin --profile <你的 profile> add github:fanyu2026/dsh-bili-img
 # 然后重启 app（插件在启动时加载）
 ```
 
+## 工具注册契约（踩过的坑）
+
+DSH 的 `ToolService.register(definition)` 要求 definition **必须有 `output: { schema, render }`**（`presentationMeta` 可选），
+少了会在注册那一刻抛 `TypeError: tool "..." must declare output { schema, render }`，结果是工具静默消失、插件等于没装。
+
+本插件的做法：
+
+- 有宿主 `@deepseek-ai/dsh-tools` 时走 `defineTool`；没有时自己把属性表编译成 JSON Schema，两条路产出同一个形状
+- `output.render(args, value)` 负责把执行结果投影成给模型看的文本
+- node 解析顺序：`DSH_NODE` → `BILI_NODE` → PATH 里的 `node` → 常见安装路径（跨机器才不至于绑死某台机器）
+
 ## 凭据
 
 不经过插件，脚本直接读 `~/.bili-ai/credentials.json`（字段：`sessdata` / `bili_jct` / `buvid3` / `dedeuserid`，与 [dsh-bili-whale](https://github.com/) 共用同一份）。
