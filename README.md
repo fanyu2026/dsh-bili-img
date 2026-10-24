@@ -12,7 +12,8 @@
 ## 装
 
 ```bash
-dsh plugin --profile <你的 profile> add <本仓库的本地路径或 git 地址>
+dsh plugin --profile <你的 profile> add github:fanyu2026/dsh-bili-img
+# 或者本地开发：dsh plugin --profile <你的 profile> add link:/path/to/dsh-bili-img
 # 然后重启 app（插件在启动时加载）
 ```
 
